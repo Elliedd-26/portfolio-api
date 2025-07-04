@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  h1 Portfolio Projects
+
+  form(action="/admin/projects/add" method="POST" class="mb-4")
+    .mb-3
+      label.form-label Title
+      input.form-control(type="text", name="title", required)
+    .mb-3
+      label.form-label Description
+      textarea.form-control(name="description")
+    .mb-3
+      label.form-label Link
+      input.form-control(type="text", name="link")
+    button.btn.btn-primary(type="submit") Add Project
+
+  hr
+
+  table.table.table-striped
+    thead
+      tr
+        th Title
+        th Description
+        th Link
+        th Actions
+    tbody
+      each project in projects
+        tr
+          td #{project.title}
+          td #{project.description}
+          td
+            a(href=project.link target="_blank") #{project.link}
+          td
+            a.btn.btn-danger.btn-sm(href=`/admin/projects/delete/${project._id}`) Delete

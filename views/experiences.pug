@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1 Experiences
+
+  form(action="/admin/experiences/add" method="POST" class="mb-4")
+    .mb-3
+      label.form-label Title
+      input.form-control(type="text", name="title", required)
+    .mb-3
+      label.form-label Company
+      input.form-control(type="text", name="company")
+    .mb-3
+      label.form-label Description
+      textarea.form-control(name="description")
+    .mb-3
+      label.form-label Start Date
+      input.form-control(type="text", name="startDate")
+    .mb-3
+      label.form-label End Date
+      input.form-control(type="text", name="endDate")
+    button.btn.btn-primary(type="submit") Add Experience
+
+  hr
+
+  table.table.table-striped
+    thead
+      tr
+        th Title
+        th Company
+        th Description
+        th Start
+        th End
+        th Actions
+    tbody
+      each exp in experiences
+        tr
+          td #{exp.title}
+          td #{exp.company}
+          td #{exp.description}
+          td #{exp.startDate}
+          td #{exp.endDate}
+          td
+            a.btn.btn-danger.btn-sm(href=`/admin/experiences/delete/${exp._id}`) Delete
