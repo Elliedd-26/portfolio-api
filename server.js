@@ -36,6 +36,19 @@ app.get('/health', (_req, res) => res.json({ ok: true }));
 app.use('/admin', adminRoutes);
 app.use('/api', apiRoutes);
 
+app.get('/debug/db', async (_req, res) => {
+  try {
+    const cn = mongoose.connection;
+    const [p, e] = await Promise.all([
+      cn.collection('projects').countDocuments(),
+      cn.collection('experiences').countDocuments()
+    ]);
+    res.json({ db: cn.name, projects: p, experiences: e });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* ----------------------- Start-up ----------------------- */
 async function start() {
   // Use either MONGO_URL or MONGO_URI (Render: set one of them, not both)
@@ -49,6 +62,7 @@ async function start() {
     // Connect to MongoDB Atlas
     await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 });
     console.log('✅ MongoDB connected');
+    console.log('Connected DB:', mongoose.connection.name);
 
     // IMPORTANT: Render injects PORT. Do NOT set a custom PORT in Render.
     const port = process.env.PORT || 8080;
