@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log(err));
 
 // middleware
-app.use(cors()); // ADD THIS - allows React app to make requests
+app.use(cors());
 app.set("view engine", "pug");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
