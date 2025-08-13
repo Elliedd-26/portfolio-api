@@ -1,11 +1,9 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
 const experienceSchema = new mongoose.Schema({
   title: String,
   company: String,
   description: String,
   startDate: String,
-  endDate: String
-});
-
-module.exports = mongoose.model("Experience", experienceSchema);
+  endDate: String,
+}, { timestamps: true });
+module.exports = mongoose.model('Experience', experienceSchema);
